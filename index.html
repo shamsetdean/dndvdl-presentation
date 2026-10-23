@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<!--
+  DNDVDL-MAP, page de présentation
+  © 2026 Shams Guettaf, Anthropotech Lab. Tous droits réservés.
+  Voir LICENSE : reproduction et réutilisation interdites sans autorisation écrite.
+  Polices tierces sous licence SIL OFL 1.1 (voir fonts/OFL.txt).
+-->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DNDVDL-MAP, la baie informatique lisible par tous</title>
+<meta name="description" content="DNDVDL-MAP est un outil privé qui permet de gérer et d'organiser des baies informatiques. L'application est en ligne, les données restent sur l'appareil.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1b21">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="DNDVDL-MAP, Anthropotech Lab">
+<meta property="og:title" content="DNDVDL-MAP, la baie informatique lisible par tous">
+<meta property="og:description" content="L'application est en ligne. Les données de la baie ne quittent jamais l'appareil.">
+<meta property="og:url" content="https://shamsetdean.github.io/dndvdl-presentation/">
+<meta property="og:image" content="https://shamsetdean.github.io/dndvdl-presentation/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DNDVDL-MAP, Anthropotech Lab : trois câbles réseau branchés sur un bandeau de brassage">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DNDVDL-MAP, la baie informatique lisible par tous">
+<meta name="twitter:description" content="L'application est en ligne. Les données de la baie ne quittent jamais l'appareil.">
+<meta name="twitter:image" content="https://shamsetdean.github.io/dndvdl-presentation/og-image.jpg">
+<link rel="preload" as="font" type="font/woff2" href="fonts/space-grotesk.woff2" crossorigin>
+<link rel="preload" as="image" href="images/01-baie.webp">
+<script>
+document.documentElement.classList.add('js');
+/* Aucun stockage dans le navigateur : l'ecran d'accueil est simplement saute
+   lors d'un retour arriere, d'un lien vers une section, ou en venant d'une autre page du site. */
+(function(){
+  var skip = !!location.hash;
+  try{
+    var nav = performance.getEntriesByType('navigation')[0];
+    if(nav && nav.type === 'back_forward') skip = true;
+    if(document.referrer && new URL(document.referrer).origin === location.origin) skip = true;
+  }catch(e){}
+  document.documentElement.classList.add(skip ? 'no-splash' : 'splash-on');
+})();
+</script>
+<style>
+/* Polices hebergees localement (licence SIL OFL 1.1, voir fonts/OFL.txt) : aucune requete externe */
+@font-face{font-family:"Space Grotesk";src:url(fonts/space-grotesk.woff2) format("woff2");font-weight:300 700;font-display:swap}
+@font-face{font-family:"Instrument Serif";src:url(fonts/instrument-serif-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(fonts/ibm-plex-mono-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(fonts/ibm-plex-mono-500.woff2) format("woff2");font-weight:500;font-display:swap}
+
+:root{
+  --night:#0d1b21;
+  --night2:#132a33;
+  --frost:#e7efec;
+  --frost-dim:rgba(231,239,236,.62);
+  --paper:#eef1ec;
+  --paper2:#e2e8e2;
+  --ink:#14232a;
+  --dim:#56676c;
+  --line:rgba(20,35,42,.13);
+  --green:#94a84c;
+  --pink:#d9578c;
+  --blue:#3b8fb3;
+  --navy:#1b4e68;
+  --sans:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Instrument Serif",Georgia,serif;
+  --mono:"IBM Plex Mono","SF Mono",ui-monospace,monospace;
+  --grid-dark:linear-gradient(rgba(150,205,215,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(150,205,215,.07) 1px,transparent 1px);
+  --grid-light:linear-gradient(rgba(20,35,42,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(20,35,42,.055) 1px,transparent 1px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--night)}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+em.s{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
+
+/* Ecran d'accueil : trois cables se branchent, les voyants s'allument */
+html.splash-on,html.splash-on body{overflow:hidden}
+.no-splash #splash{display:none}
+#splash{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;cursor:pointer;
+  background:var(--grid-dark),var(--night);background-size:36px 36px,36px 36px,auto;color:var(--frost);transition:opacity .7s ease,visibility .7s ease}
+#splash.out{opacity:0;visibility:hidden}
+#splash svg{width:min(260px,64vw);height:auto;overflow:visible}
+#splash .cb{fill:none;stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.1s cubic-bezier(.5,0,.2,1) forwards}
+#splash .cb:nth-of-type(2){animation-delay:.18s}
+#splash .cb:nth-of-type(3){animation-delay:.36s}
+#splash .port{fill:none;stroke:rgba(231,239,236,.55);stroke-width:2}
+#splash .led{fill:rgba(231,239,236,.15);animation:led .3s ease forwards}
+#splash .led.l1{animation-delay:1.1s}#splash .led.l2{animation-delay:1.28s}#splash .led.l3{animation-delay:1.46s}
+#splash h2{font-weight:600;font-size:clamp(1.9rem,6vw,2.6rem);letter-spacing:.02em;margin-top:30px;opacity:0;animation:up .7s ease .8s forwards}
+#splash h2 span{color:var(--frost-dim);font-weight:400}
+#splash p{margin-top:10px;font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--frost-dim);opacity:0;animation:up .7s ease 1.15s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes led{to{fill:var(--c)}}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Navigation */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;height:54px;color:var(--frost);background:rgba(13,27,33,.74);backdrop-filter:saturate(150%) blur(16px);-webkit-backdrop-filter:saturate(150%) blur(16px);border-bottom:1px solid rgba(231,239,236,.1);transition:background .35s,color .35s,border-color .35s}
+.nav.light{color:var(--ink);background:rgba(238,241,236,.82);border-color:var(--line)}
+.nav .in{max-width:1200px;margin:0 auto;height:100%;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none}
+.brand b{font-weight:600;font-size:1.02rem;letter-spacing:.04em}
+.brand b span{opacity:.55;font-weight:400}
+.brand small{font-family:var(--mono);font-size:.66rem;opacity:.55}
+.nav ul{display:flex;gap:26px;list-style:none}
+.nav ul a{font-size:.82rem;text-decoration:none;opacity:.68;transition:opacity .2s}
+.nav ul a:hover{opacity:1}
+.priv{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border:1px solid currentColor;border-radius:4px;opacity:.85}
+.priv svg{width:13px;height:13px}
+@media (max-width:860px){.nav ul{display:none}.brand small{display:none}}
+
+/* Briques communes */
+.pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);font-weight:500}
+.dark .tag{color:#7fc2df}
+.frame{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#fff;box-shadow:0 30px 80px rgba(13,27,33,.22),0 6px 18px rgba(13,27,33,.08)}
+.dark .frame{border-color:rgba(231,239,236,.16);box-shadow:0 40px 120px rgba(0,0,0,.55)}
+.frame img{width:100%;height:auto}
+.dark{background:var(--grid-dark),var(--night);background-size:44px 44px,44px 44px,auto;color:var(--frost)}
+.light{background:var(--grid-light),var(--paper);background-size:44px 44px,44px 44px,auto}
+
+/* Hero : la baie s'installe, les cables se tirent */
+.hero{height:280vh;position:relative}
+.hero-copy{position:absolute;z-index:3;top:clamp(84px,14vh,140px);left:0;right:0;text-align:center;padding:0 22px;
+  opacity:calc(1 - var(--p,0)*3);transform:translateY(calc(var(--p,0)*-60px));will-change:opacity,transform}
+.hero-copy h1{font-weight:600;font-size:clamp(3.4rem,12vw,9.5rem);letter-spacing:-.04em;line-height:.9;margin:16px 0 22px}
+.hero-copy h1 span{color:transparent;-webkit-text-stroke:1.5px rgba(231,239,236,.55)}
+.hero-copy .sub{font-size:clamp(1.1rem,2.2vw,1.45rem);color:var(--frost-dim);max-width:32ch;margin:0 auto}
+.hero-copy .sub em{color:var(--frost)}
+.wires{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:calc(var(--pw,0)*25)}
+.wires path{fill:none;stroke-width:.55;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--pw,0))}
+.hero-shot{position:absolute;z-index:2;left:50%;top:50%;width:min(88vw,calc(78svh*1.4));
+  transform:translate(-50%,-50%) translateY(calc((1 - var(--pp,0))*30svh)) scale(calc(.78 + var(--pp,0)*.22));will-change:transform}
+.hero-shot .frame{clip-path:inset(0 0 calc((1 - var(--pr,0))*100%) 0 round 10px)}
+.hero-shot .ru{position:absolute;left:-14px;right:-14px;height:2px;top:calc(var(--pr,0)*100%);background:var(--green);box-shadow:0 0 16px var(--green);opacity:calc(1 - var(--pr,0)*var(--pr,0))}
+
+/* Manifeste */
+.manifesto{height:300vh;position:relative}
+.manifesto .pin{display:flex;align-items:center;justify-content:center;padding:0 24px}
+.mwrap{max-width:900px;display:grid;grid-template-columns:4px 1fr;gap:34px}
+.mbar{background:rgba(231,239,236,.1);border-radius:2px;position:relative;overflow:hidden}
+.mbar i{position:absolute;left:0;right:0;top:0;height:calc(var(--mp,0)*100%);background:linear-gradient(var(--blue),var(--pink),var(--green))}
+#manifeste{font-size:clamp(1.6rem,4vw,3rem);font-weight:500;letter-spacing:-.02em;line-height:1.22}
+#manifeste .w{opacity:.16}
+#manifeste .k1{color:var(--green)}#manifeste .k2{color:var(--pink)}#manifeste .k3{color:#6fb6d6}
+
+/* Contenant et contenu */
+.split{height:460vh;position:relative}
+.split .pin{display:flex;align-items:center}
+.split-grid{width:100%;max-width:1240px;margin:0 auto;padding:70px 26px 24px;display:grid;grid-template-columns:minmax(280px,.78fr) 1.4fr;gap:50px;align-items:center}
+.split h2{font-weight:600;font-size:clamp(2rem,3.8vw,3rem);letter-spacing:-.03em;line-height:1.02;margin:12px 0 26px}
+.steps{list-style:none;display:grid;gap:4px}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:13px 0;border-top:1px solid var(--line);opacity:.34;transition:opacity .45s}
+.steps li.on{opacity:1}
+.steps li.done{opacity:.6}
+.steps b{font-family:var(--mono);font-weight:500;font-size:.78rem;color:var(--blue);padding-top:3px}
+.steps strong{display:block;font-weight:600;font-size:1.04rem;margin-bottom:2px}
+.steps p{color:var(--dim);font-size:.93rem}
+.diagram{position:relative;display:grid;grid-template-columns:1fr 190px;grid-template-rows:auto 40px auto;column-gap:26px}
+.zone-lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.srv{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:#f8faf7;transition:box-shadow .4s,border-color .4s}
+.srv svg{flex:none;width:30px;height:30px;padding:6px;border-radius:7px;color:#fff}
+.srv strong{display:block;font-size:.95rem;line-height:1.2}
+.srv span{font-size:.8rem;color:var(--dim)}
+.srv.gh svg{background:var(--ink)}
+.srv.sb svg{background:var(--navy)}
+.online{grid-column:1/3;display:grid;grid-template-columns:1fr 190px;column-gap:26px;align-items:end}
+.online .zone-lbl{grid-column:1/3;margin-bottom:8px}
+.frontier{grid-column:1/3;position:relative;display:flex;align-items:center}
+.frontier::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px dashed rgba(20,35,42,.35)}
+.frontier span{position:relative;margin-left:18px;background:var(--paper);padding:0 10px;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.device{grid-column:1/3;display:grid;grid-template-columns:1fr 190px;column-gap:26px;align-items:center}
+.device .zone-lbl{grid-column:1/3;margin-bottom:8px}
+.screen{position:relative;display:grid}
+.screen .frame{grid-area:1/1;transition:opacity .6s ease}
+.screen .f-baie{opacity:0}
+.ph2 .screen .f-baie,.ph3 .screen .f-baie{opacity:1}
+.screen .f-vide{opacity:.25;filter:grayscale(1)}
+.ph1 .screen .f-vide,.ph2 .screen .f-vide,.ph3 .screen .f-vide{opacity:1;filter:none}
+.flow{position:absolute;z-index:2;left:30%;width:2px;top:-40px;height:40px;background:repeating-linear-gradient(var(--ink) 0 5px,transparent 5px 10px);opacity:0;transition:opacity .4s}
+.flow::after{content:"";position:absolute;left:-4px;width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);top:-10px;opacity:0}
+.ph1 .flow{opacity:.8}
+.ph1 .flow::after{animation:drop 1.2s linear infinite;opacity:1}
+@keyframes drop{from{top:-60px}to{top:40px}}
+.ph1 .srv.gh{border-color:var(--green);box-shadow:0 0 0 3px rgba(148,168,76,.2)}
+.file{position:relative;z-index:3;padding:20px 16px 16px;background:#fffef9;border:1px solid var(--line);border-radius:6px 22px 6px 6px;box-shadow:0 18px 40px rgba(13,27,33,.14);transition:transform .8s cubic-bezier(.3,.7,.2,1),opacity .6s ease}
+.file::before{content:"";position:absolute;right:0;top:0;width:22px;height:22px;background:linear-gradient(225deg,var(--paper) 50%,#e6e6dc 50%);border-bottom-left-radius:4px}
+.file svg{width:30px;height:30px;color:var(--navy);margin-bottom:10px}
+.file b{display:block;font-family:var(--mono);font-weight:500;font-size:.86rem}
+.file span{display:block;font-size:.78rem;color:var(--dim);margin-top:3px}
+.file .act{display:inline-block;margin-top:12px;font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px;background:var(--paper2);color:var(--ink)}
+.file .ex{display:none}
+.ph2 .file{transform:translateX(calc(-100% - 60px)) scale(.55);opacity:0}
+.ph3 .file .im{display:none}
+.ph3 .file .ex{display:inline-block;background:var(--green);color:#fff}
+.nogo{position:absolute;right:95px;top:50%;width:0;height:0;opacity:0;transition:opacity .4s}
+.nogo::before{content:"";position:absolute;left:-1px;top:14px;height:46px;border-left:2px dashed rgba(192,57,43,.55)}
+.ph3 .nogo{opacity:1}
+.nogo svg{position:absolute;left:-14px;top:-14px;width:28px;height:28px;color:#c0392b}
+.nogo span{position:absolute;right:20px;top:-8px;font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:#a33a2f;white-space:nowrap;background:var(--paper);padding:0 6px}
+.legend3{max-width:1240px;margin:0 auto;padding:0 26px}
+@media (max-width:900px){
+  .split{height:420vh}
+  .split-grid{grid-template-columns:1fr;gap:16px;padding:64px 16px 10px}
+  .split h2{font-size:1.65rem;margin:6px 0 8px}
+  .steps li{display:none;padding:6px 0;border:0}
+  .steps li.on{display:grid}
+  .diagram{grid-template-columns:1fr 112px;grid-template-rows:auto 26px auto;column-gap:12px}
+  .online,.device{grid-template-columns:1fr 112px;column-gap:12px}
+  .srv{padding:8px 9px;gap:8px}
+  .srv svg{width:24px;height:24px;padding:4px}
+  .srv strong{font-size:.78rem}.srv span{font-size:.68rem}
+  .file{padding:12px 10px 10px}.file svg{width:22px;height:22px;margin-bottom:4px}
+  .file b{font-size:.72rem}.file span{font-size:.66rem}
+  .frontier span{font-size:.56rem}
+  .nogo{right:56px}
+  .nogo::before{height:34px}
+  .nogo span{display:none}
+  .flow{top:-26px;height:26px}
+}
+
+/* Ou vit quoi */
+.where{padding:120px 24px 130px}
+.where h2{max-width:1180px;margin:12px auto 50px;font-weight:600;font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.03em;line-height:1.05}
+.cols{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#f8faf7}
+.col{padding:28px 26px 30px;border-right:1px solid var(--line);position:relative}
+.col:last-child{border-right:0}
+.col::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--c)}
+.col .zone-lbl{display:block;margin-bottom:14px}
+.col h3{font-weight:600;font-size:1.3rem;letter-spacing:-.01em;margin-bottom:10px}
+.col p{color:var(--dim);font-size:.95rem}
+.col ul{list-style:none;margin-top:14px;display:grid;gap:7px}
+.col li{font-family:var(--mono);font-size:.78rem;display:flex;gap:8px;align-items:baseline}
+.col li::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--c);transform:translateY(-1px)}
+.col li.no{color:var(--dim);text-decoration:line-through;text-decoration-color:rgba(192,57,43,.6)}
+.col li.no::before{background:transparent;border:1.5px solid rgba(192,57,43,.6)}
+@media (max-width:860px){.cols{grid-template-columns:1fr}.col{border-right:0;border-bottom:1px solid var(--line)}.col:last-child{border-bottom:0}}
+
+/* Vitrine horizontale */
+.rail{height:430vh;position:relative}
+.rail .pin{display:flex;flex-direction:column;justify-content:center}
+.track{display:flex;width:max-content;will-change:transform}
+.panel{width:100vw;flex:none;padding:60px max(26px,calc(50vw - 600px)) 0;display:grid;grid-template-columns:1.45fr minmax(260px,.7fr);gap:50px;align-items:center}
+.panel h3{font-weight:600;font-size:clamp(2rem,3.8vw,3.1rem);letter-spacing:-.03em;line-height:1.02;margin:12px 0 16px}
+.panel p{color:var(--frost-dim);font-size:1.04rem;max-width:36ch}
+.jacks{display:flex;gap:10px;justify-content:center;margin-top:34px}
+.jacks i{width:26px;height:22px;border:1.5px solid rgba(231,239,236,.3);border-radius:4px;position:relative;transition:background .35s,border-color .35s}
+.jacks i::after{content:"";position:absolute;left:50%;bottom:-9px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:rgba(231,239,236,.2);transition:background .35s,box-shadow .35s}
+.jacks i.on{background:var(--c);border-color:var(--c)}
+.jacks i.on::after{background:#9cff6b;box-shadow:0 0 8px #9cff6b}
+@media (max-width:860px){
+  .panel{grid-template-columns:1fr;gap:18px;padding:70px 18px 0}
+  .panel p{font-size:.98rem}
+  .panel h3{font-size:1.9rem}
+}
+
+/* Protection : le filigrane */
+.guard{height:340vh;position:relative}
+.guard .pin{display:flex;align-items:center}
+.guard-grid{width:100%;max-width:1240px;margin:0 auto;padding:70px 26px 20px;display:grid;grid-template-columns:1.35fr minmax(280px,.75fr);gap:50px;align-items:center}
+.gstage{position:relative;display:grid}
+.gstage figure{grid-area:1/1;transition:opacity .6s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.g-zoom{opacity:0;transform:scale(.9)}
+.gp2 .g-full{opacity:.15;transform:scale(1.04)}
+.gp2 .g-zoom{opacity:1;transform:none}
+.corners{position:absolute;inset:-14px;pointer-events:none;opacity:0;transition:opacity .3s}
+.corners i{position:absolute;width:30px;height:30px;border:3px solid var(--pink)}
+.corners i:nth-child(1){left:0;top:0;border-right:0;border-bottom:0}
+.corners i:nth-child(2){right:0;top:0;border-left:0;border-bottom:0}
+.corners i:nth-child(3){left:0;bottom:0;border-right:0;border-top:0}
+.corners i:nth-child(4){right:0;bottom:0;border-left:0;border-top:0}
+.gp1 .corners{opacity:1}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;border-radius:10px}
+.gp1 .flash{animation:flash .7s ease-out}
+@keyframes flash{0%{opacity:.95}100%{opacity:0}}
+.stamp{position:absolute;left:8%;top:18%;padding:10px 14px;background:var(--pink);color:#fff;font-family:var(--mono);font-size:.82rem;border-radius:4px;box-shadow:0 12px 30px rgba(217,87,140,.4);opacity:0;transform:translateY(10px);transition:opacity .5s .3s,transform .5s .3s}
+.stamp::after{content:"";position:absolute;left:24px;bottom:-8px;border:8px solid transparent;border-top-color:var(--pink);border-bottom:0}
+.gp2 .stamp{opacity:1;transform:none}
+.gtexts{display:grid}
+.gt{grid-area:1/1;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s;pointer-events:none}
+.gt.on{opacity:1;transform:none;pointer-events:auto}
+.gt h3{font-weight:600;font-size:clamp(1.9rem,3.6vw,2.9rem);letter-spacing:-.03em;line-height:1.04;margin:12px 0 16px}
+.gt p{color:var(--frost-dim);font-size:1.03rem;max-width:38ch}
+.gt p+p{margin-top:10px}
+@media (max-width:860px){.guard-grid{grid-template-columns:1fr;gap:20px;padding:70px 16px 10px}.gt h3{font-size:1.8rem}.gt p{font-size:.96rem}}
+
+/* Chiffres : un bandeau de brassage */
+.numbers{padding:130px 24px 130px;text-align:center}
+.numbers h2{font-weight:600;font-size:clamp(1.9rem,4.2vw,3.2rem);letter-spacing:-.03em;line-height:1.05;max-width:22ch;margin:12px auto 60px}
+.u1{max-width:1060px;margin:0 auto;position:relative;padding:22px 64px;background:linear-gradient(#20313a,#17262d);border-radius:8px;border:1px solid rgba(231,239,236,.12);box-shadow:0 30px 70px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06)}
+.u1::before,.u1::after{content:"";position:absolute;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:radial-gradient(circle,#0d1b21 30%,#56676c 32%,#8c9aa0 70%)}
+.u1::before{left:22px}.u1::after{right:22px}
+.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.mod{padding:30px 16px 26px;background:#0f2028;border:1px solid rgba(231,239,236,.08);border-radius:6px;position:relative}
+.mod .ledr{position:absolute;top:12px;right:12px;width:8px;height:8px;border-radius:50%;background:rgba(231,239,236,.14);transition:background .4s,box-shadow .4s}
+.mod.in .ledr{background:var(--c);box-shadow:0 0 10px var(--c)}
+.mod strong{display:block;font-weight:600;font-size:clamp(3.6rem,8vw,5.8rem);letter-spacing:-.05em;line-height:1;color:var(--c)}
+.mod span{display:block;margin-top:12px;color:var(--frost-dim);font-size:.95rem}
+@media (max-width:760px){.u1{padding:18px}.u1::before,.u1::after{display:none}.mods{grid-template-columns:1fr}}
+
+/* Securite : cartouche */
+.secu{padding:130px 24px 150px}
+.secu .grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:70px;align-items:center}
+.secu h2{font-weight:600;font-size:clamp(1.9rem,4.2vw,3.1rem);letter-spacing:-.03em;line-height:1.05;margin:12px 0 18px}
+.secu .lead{color:var(--dim);font-size:1.06rem;max-width:48ch;margin-bottom:30px}
+.cart{border:1.5px solid var(--ink);border-radius:2px;background:#f8faf7}
+.cart .r{display:grid;grid-template-columns:170px 1fr;border-bottom:1px solid var(--line)}
+.cart .r:last-child{border-bottom:0}
+.cart .k{padding:14px 14px;border-right:1px solid var(--line);font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.cart .v{padding:12px 16px}
+.cart .v strong{display:block;font-weight:600;font-size:.98rem;margin-bottom:2px}
+.cart .v p{color:var(--dim);font-size:.9rem}
+.cart .head{display:flex;justify-content:space-between;gap:10px;padding:10px 14px;background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase}
+.phone{max-width:300px;margin:0 auto;transform:perspective(1100px) rotateY(calc((1 - var(--v,0))*-20deg)) rotateX(calc((1 - var(--v,0))*6deg)) translateY(calc((1 - var(--v,0))*50px));opacity:calc(.2 + var(--v,0)*.9)}
+.phone .frame{border-radius:26px;border:6px solid var(--ink)}
+@media (max-width:900px){.secu .grid{grid-template-columns:1fr;gap:56px}.phone{max-width:240px}.cart .r{grid-template-columns:1fr}.cart .k{border-right:0;padding-bottom:0}}
+
+/* Final : un cable se branche */
+.final{text-align:center;padding:130px 24px 150px}
+.plug{width:min(520px,90vw);height:auto;margin:0 auto 44px;display:block;overflow:visible}
+.plug .w{fill:none;stroke:var(--green);stroke-width:7;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--k,0))}
+.plug .jack{fill:none;stroke:rgba(231,239,236,.5);stroke-width:2.5}
+.plug .ld{fill:rgba(231,239,236,.15);transition:fill .3s}
+.final.live .plug .ld{fill:#9cff6b}
+.final h2{font-weight:600;font-size:clamp(2.3rem,6.4vw,5rem);letter-spacing:-.04em;line-height:1;max-width:16ch;margin:14px auto 22px}
+.final p{color:var(--frost-dim);font-size:1.1rem;max-width:46ch;margin:0 auto 38px}
+.btn{display:inline-block;background:var(--green);color:var(--night);text-decoration:none;font-weight:600;padding:14px 28px;border-radius:6px;font-size:1rem;transition:transform .2s,filter .2s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn.ghost{background:transparent;border:1px solid rgba(231,239,236,.25);color:var(--frost);margin-left:12px}
+@media (max-width:480px){.btn.ghost{margin:12px 0 0}}
+
+footer{background:#091418;color:rgba(231,239,236,.55);padding:36px 24px 56px;font-size:.82rem}
+footer .in{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px 40px;justify-content:space-between}
+footer p{max-width:62ch}
+footer strong{color:var(--frost);font-weight:600}
+
+/* Apparition */
+.js .rv{opacity:0;transform:translateY(28px);transition:opacity .85s ease,transform .85s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+
+/* Mouvement reduit */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  #splash *{animation:none!important;opacity:1!important;stroke-dashoffset:0!important}
+  .hero,.manifesto,.split,.rail,.guard{height:auto}
+  .pin{position:static;height:auto;overflow:visible}
+  .hero .pin{padding:120px 22px 70px}
+  .hero-copy,.hero-shot{position:static;transform:none!important;opacity:1;width:auto;max-width:1100px;margin:0 auto}
+  .hero-shot{margin-top:46px}.hero-shot .frame{clip-path:none}.hero-shot .ru,.wires{display:none}
+  .manifesto .pin{padding:100px 24px}#manifeste .w{opacity:1}
+  .steps li{opacity:1;display:grid}
+  .split-grid,.guard-grid{padding:90px 24px}
+  .ph-all .screen .f-vide{display:none}.screen .f-baie{opacity:1}
+  .track{flex-direction:column;width:auto;transform:none!important}
+  .panel{width:auto;padding:60px 24px}
+  .jacks{display:none}
+  .gtexts{display:flex;flex-direction:column;gap:30px}.gt{opacity:1;transform:none}
+  .g-zoom{display:none}.stamp,.corners{display:none}
+  .js .rv{opacity:1;transform:none}
+  .phone{transform:none;opacity:1}
+  .plug .w{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+
+<div id="splash" role="presentation" aria-hidden="true">
+  <svg viewBox="0 0 260 110" xmlns="http://www.w3.org/2000/svg">
+    <path class="cb" pathLength="1" stroke="#3b8fb3" d="M4 22 C 70 22, 70 70, 128 70 H 152"/>
+    <path class="cb" pathLength="1" stroke="#d9578c" d="M4 55 C 90 55, 110 70, 150 70 H 182"/>
+    <path class="cb" pathLength="1" stroke="#94a84c" d="M4 88 C 120 88, 140 70, 180 70 H 212"/>
+    <rect class="port" x="150" y="58" width="20" height="24" rx="3"/>
+    <rect class="port" x="180" y="58" width="20" height="24" rx="3"/>
+    <rect class="port" x="210" y="58" width="20" height="24" rx="3"/>
+    <circle class="led l1" cx="160" cy="98" r="3.4" style="--c:#3b8fb3"/>
+    <circle class="led l2" cx="190" cy="98" r="3.4" style="--c:#d9578c"/>
+    <circle class="led l3" cx="220" cy="98" r="3.4" style="--c:#94a84c"/>
+  </svg>
+  <h2>DNDVDL<span>-MAP</span></h2>
+  <p>bâtir par soi-même ce qu'on rêve de voir exister</p>
+</div>
+
+<nav class="nav" aria-label="Navigation principale">
+  <div class="in">
+    <a class="brand" href="#haut"><b>DNDVDL<span>-MAP</span></b><small>anthropotech /lab</small></a>
+    <ul>
+      <li><a href="#principe">Principe</a></li>
+      <li><a href="#fonctionnement">Fonctionnement</a></li>
+      <li><a href="#protection">Protection</a></li>
+      <li><a href="#securite">Sécurité</a></li>
+    </ul>
+    <span class="priv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Outil privé</span>
+  </div>
+</nav>
+
+<main id="haut">
+
+<!-- Hero -->
+<section class="hero dark" data-scene="hero" data-dark aria-label="Présentation de DNDVDL-MAP">
+  <div class="pin">
+    <svg class="wires" viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path pathLength="1" stroke="#3b8fb3" d="M-4 36 C 18 36, 22 56, 46 56"/>
+      <path pathLength="1" stroke="#d9578c" d="M-4 46 C 20 46, 24 63, 46 63"/>
+      <path pathLength="1" stroke="#94a84c" d="M164 40 C 142 40, 138 60, 114 60"/>
+    </svg>
+    <div class="hero-copy">
+      <p class="tag">Infrastructure réseau · usage interne</p>
+      <h1>DNDVDL<span>-MAP</span></h1>
+      <p class="sub">La baie informatique, lisible par tous. <em class="s">Les données, gardées par vous.</em></p>
+    </div>
+    <div class="hero-shot">
+      <figure class="frame"><img src="images/01-baie.webp" width="1800" height="1286" alt="Une baie informatique fictive dans DNDVDL-MAP : bandeaux de brassage, switchs, câbles colorés et liste des connexions" fetchpriority="high"></figure>
+      <i class="ru" aria-hidden="true"></i>
+    </div>
+  </div>
+</section>
+
+<!-- Manifeste -->
+<section class="manifesto dark" data-scene="manifesto" data-dark aria-label="Le constat">
+  <div class="pin">
+    <div class="mwrap">
+      <div class="mbar" aria-hidden="true"><i></i></div>
+      <p id="manifeste">Un câble débranché, et personne ne sait où il menait. Le plan de la baie dort dans un tableur que seul son auteur comprend. DNDVDL-MAP dessine chaque port, chaque câble et chaque bureau, pour que la baie se lise d'un coup d'œil, par tous ceux qui en ont besoin.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Contenant et contenu -->
+<section class="split light" id="principe" data-scene="split" aria-label="Le principe : séparer le contenant et le contenu">
+  <div class="pin">
+    <div class="split-grid">
+      <div>
+        <p class="tag">Le principe</p>
+        <h2>Le contenant est en ligne. <em class="s">Le contenu, jamais.</em></h2>
+        <ol class="steps">
+          <li class="on"><b>01</b><div><strong>Le contenant : une application vide</strong><p>Sur GitHub Pages, il n'y a que la structure : l'affichage, les outils, les écrans. Aucune baie, aucun port, aucune adresse.</p></div></li>
+          <li><b>02</b><div><strong>Le navigateur la télécharge</strong><p>À l'ouverture, l'application arrive sur l'appareil. Elle affiche une coquille vide qui attend un fichier.</p></div></li>
+          <li><b>03</b><div><strong>Importer : le contenu reste sur place</strong><p>Le fichier de la baie est lu par le navigateur, sur l'appareil. Il n'est envoyé à aucun serveur.</p></div></li>
+          <li><b>04</b><div><strong>Exporter : rien ne remonte en ligne</strong><p>Les modifications repartent dans un nouveau fichier, à conserver en lieu sûr. Le seul passage par Internet concerne la connexion au compte.</p></div></li>
+        </ol>
+      </div>
+      <div class="diagram ph0" id="diagram">
+        <div class="online">
+          <span class="zone-lbl">En ligne</span>
+          <div class="srv gh">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h8"/></svg>
+            <div><strong>L'application</strong><span>GitHub Pages · structure vide</span></div>
+          </div>
+          <div class="srv sb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+            <div><strong>Les comptes</strong><span>Supabase · e-mail, statut, rôle</span></div>
+          </div>
+        </div>
+        <div class="frontier"><span>frontière</span>
+          <div class="nogo" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="10" fill="#fff"/><path d="M8 8l8 8M16 8l-8 8"/></svg>
+            <span>rien ne remonte</span>
+          </div>
+        </div>
+        <div class="device">
+          <span class="zone-lbl">Sur votre appareil</span>
+          <div class="screen">
+            <i class="flow" aria-hidden="true"></i>
+            <figure class="frame f-vide"><img src="images/03-vide.webp" width="1800" height="1286" alt="L'application sans données : une coquille vide qui propose d'importer un fichier" loading="lazy"></figure>
+            <figure class="frame f-baie"><img src="images/01-baie.webp" width="1800" height="1286" alt="La même application après l'import du fichier : la baie s'affiche" loading="lazy"></figure>
+          </div>
+          <div style="position:relative">
+            <div class="file">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+              <b>baie.json</b>
+              <span>Le contenu : ports, câbles, bureaux, équipements</span>
+              <em class="act im">Importer</em><em class="act ex">Exporter</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ou vit quoi -->
+<section class="where light" aria-label="Où se trouve chaque élément">
+  <p class="tag rv" style="max-width:1180px;margin:0 auto">En résumé</p>
+  <h2 class="rv">Trois endroits, <em class="s">trois rôles bien séparés.</em></h2>
+  <div class="cols">
+    <div class="col rv" style="--c:var(--ink)">
+      <span class="zone-lbl">En ligne · GitHub Pages</span>
+      <h3>Le contenant</h3>
+      <p>Le code de l'application, public et identique pour tous.</p>
+      <ul><li>Écrans et outils</li><li>Dessin des baies et des câbles</li><li class="no">Aucune donnée d'infrastructure</li></ul>
+    </div>
+    <div class="col rv" style="--c:var(--navy)">
+      <span class="zone-lbl">En ligne · Supabase</span>
+      <h3>Les comptes</h3>
+      <p>Uniquement ce qu'il faut pour se connecter et valider les accès.</p>
+      <ul><li>E-mail et mot de passe</li><li>Statut et rôle</li><li class="no">Aucune baie, aucun port</li></ul>
+    </div>
+    <div class="col rv" style="--c:var(--green)">
+      <span class="zone-lbl">Sur l'appareil</span>
+      <h3>Le contenu</h3>
+      <p>Le fichier de la baie, importé et exporté à la main. Entre deux visites, le navigateur en garde une copie sur cet appareil, et sur lui seul.</p>
+      <ul><li>Ports, câbles, prises murales</li><li>Bureaux, équipements, adresses</li><li class="no">Jamais envoyé en ligne</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- Vitrine horizontale -->
+<section class="rail dark" id="fonctionnement" data-scene="rail" data-dark aria-label="Fonctionnement">
+  <div class="pin">
+    <div class="track">
+      <article class="panel">
+        <figure class="frame"><img src="images/01-baie.webp" width="1800" height="1286" alt="La baie complète avec ses bandeaux, ses switchs et ses câbles" loading="lazy"></figure>
+        <div><p class="tag">01 · Lire</p><h3>La baie, <em class="s">telle qu'elle est câblée.</em></h3><p>Chaque élément à sa place réelle : bandeaux de brassage, switchs, tiroirs, NAS, onduleur. Les câbles prennent la couleur de leur usage.</p></div>
+      </article>
+      <article class="panel">
+        <figure class="frame"><img src="images/02-cable.webp" width="1800" height="1286" alt="Un câble suivi du bandeau jusqu'au switch, avec sa fiche détaillée" loading="lazy"></figure>
+        <div><p class="tag">02 · Suivre</p><h3>Un câble, <em class="s">de bout en bout.</em></h3><p>Un clic sur un port trace le câble jusqu'au switch et ouvre sa fiche : bureau, prise murale, ports, adresse IP. La recherche retrouve un poste en quelques lettres.</p></div>
+      </article>
+      <article class="panel">
+        <figure class="frame"><img src="images/04-demandes.webp" width="1800" height="1286" alt="L'écran des demandes d'accès en attente de validation" loading="lazy"></figure>
+        <div><p class="tag">03 · Valider</p><h3>Personne n'entre <em class="s">sans accord.</em></h3><p>Chacun peut demander un accès, mais rien ne s'ouvre avant la décision de l'administrateur : lecture seule, lecture et écriture, ou refus.</p></div>
+      </article>
+      <article class="panel">
+        <figure class="frame"><img src="images/05-consultation.webp" width="1800" height="1286" alt="La baie en mode consultation, avec un filigrane au nom de la personne connectée" loading="lazy"></figure>
+        <div><p class="tag">04 · Consulter</p><h3>Voir sans <em class="s">rien abîmer.</em></h3><p>En lecture seule, la baie se parcourt librement, sans outils de modification. Le nom de la personne et l'heure s'affichent en filigrane sur tout l'écran.</p></div>
+      </article>
+    </div>
+    <div class="jacks" aria-hidden="true"><i class="on" style="--c:#94a84c"></i><i style="--c:#d9578c"></i><i style="--c:#3b8fb3"></i><i style="--c:#1b4e68"></i></div>
+  </div>
+</section>
+
+<!-- Protection : filigrane -->
+<section class="guard dark" id="protection" data-scene="guard" data-dark aria-label="Protection contre la diffusion des captures d'écran">
+  <div class="pin">
+    <div class="guard-grid">
+      <div class="gstage gp0" id="gstage">
+        <figure class="frame g-full"><img src="images/05-consultation.webp" width="1800" height="1286" alt="Écran de consultation recouvert d'un filigrane" loading="lazy"></figure>
+        <figure class="frame g-zoom"><img src="images/06-filigrane.webp" width="1200" height="700" alt="Agrandissement du filigrane : nom de la personne, date et heure" loading="lazy"></figure>
+        <div class="flash" aria-hidden="true"></div>
+        <div class="corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="stamp" aria-hidden="true">Camille · 23/10/2026 01:20</div>
+      </div>
+      <div>
+        <div class="gtexts">
+          <div class="gt on">
+            <p class="tag">Protection</p>
+            <h3>Chaque écran <em class="s">porte un nom.</em></h3>
+            <p>En consultation, un filigrane couvre toute la baie : le nom de la personne connectée, la date et l'heure, mis à jour toutes les 30 secondes.</p>
+          </div>
+          <div class="gt">
+            <p class="tag">Une capture d'écran</p>
+            <h3>Aucun site ne peut <em class="s">l'empêcher.</em></h3>
+            <p>Aucun navigateur ne permet de bloquer une capture d'écran ou une photo de l'écran. DNDVDL-MAP ne prétend pas le faire.</p>
+          </div>
+          <div class="gt">
+            <p class="tag">Ce qu'elle emporte</p>
+            <h3>Mais elle reste <em class="s">signée.</em></h3>
+            <p>Toute capture emporte le filigrane avec elle. Si une image de la baie circule, elle désigne qui l'a prise, et quand. Cela suffit à dissuader une diffusion.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Chiffres -->
+<section class="numbers dark" id="chiffres" data-dark>
+  <p class="tag rv">En chiffres</p>
+  <h2 class="rv">Un outil simple, <em class="s">des règles nettes.</em></h2>
+  <div class="u1 rv">
+    <div class="mods">
+      <div class="mod" style="--c:#94a84c"><i class="ledr"></i><strong data-count="0">0</strong><span>donnée d'infrastructure stockée en ligne</span></div>
+      <div class="mod" style="--c:#d9578c"><i class="ledr"></i><strong data-count="3">0</strong><span>rôles : administrateur, éditeur, lecteur</span></div>
+      <div class="mod" style="--c:#6fb6d6"><i class="ledr"></i><strong data-count="4">0</strong><span>couleurs de câble, une par usage</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Securite -->
+<section class="secu light" id="securite">
+  <div class="grid">
+    <div>
+      <p class="tag rv">Données et sécurité</p>
+      <h2 class="rv">Un plan de réseau <em class="s">ne se laisse pas traîner.</em></h2>
+      <p class="lead rv">Savoir où passe chaque câble, c'est une information sensible. DNDVDL-MAP a été conçu autour de cette exigence.</p>
+      <div class="cart rv">
+        <div class="head"><span>Cartouche</span><span>DNDVDL-MAP · anthropotech /lab</span></div>
+        <div class="r"><div class="k">Données</div><div class="v"><strong>Jamais en ligne</strong><p>Le contenu de la baie reste dans un fichier local, importé et exporté à la main.</p></div></div>
+        <div class="r"><div class="k">Accès</div><div class="v"><strong>Sur validation uniquement</strong><p>Chaque compte reste en attente tant que l'administrateur ne l'a pas accepté. Ce statut est vérifié par la base, pas par l'écran.</p></div></div>
+        <div class="r"><div class="k">Rôles</div><div class="v"><strong>Lecture seule ou lecture et écriture</strong><p>L'administrateur choisit pour chaque personne. Il est le seul à valider ou refuser une demande.</p></div></div>
+        <div class="r"><div class="k">Traçabilité</div><div class="v"><strong>Filigrane nominatif</strong><p>Nom, date et heure sur chaque écran de consultation.</p></div></div>
+        <div class="r"><div class="k">Réseau</div><div class="v"><strong>Aucun traceur, aucune publicité</strong><p>Les QR codes des baies sont générés sur l'appareil, sans appel à un service extérieur. L'outil n'est pas référencé par les moteurs de recherche.</p></div></div>
+      </div>
+    </div>
+    <div class="phone" data-view>
+      <figure class="frame"><img src="images/07-mobile.webp" width="1068" height="1734" alt="DNDVDL-MAP sur téléphone, avec une baie fictive" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- Final -->
+<section class="final dark" data-dark data-final>
+  <svg class="plug" viewBox="0 0 520 120" aria-hidden="true">
+    <path class="w" pathLength="1" d="M0 30 C 160 30, 200 70, 330 70 H 392"/>
+    <rect class="jack" x="392" y="50" width="44" height="40" rx="5"/>
+    <rect class="jack" x="446" y="50" width="44" height="40" rx="5"/>
+    <circle class="ld" cx="414" cy="106" r="5"/>
+    <circle cx="468" cy="106" r="5" fill="rgba(231,239,236,.15)"/>
+  </svg>
+  <p class="tag rv">Outil privé</p>
+  <h2 class="rv">Une baie claire, <em class="s">des données à l'abri.</em></h2>
+  <p class="rv">DNDVDL-MAP n'est pas ouvert au public. L'accès se fait sur demande, après validation. Une démonstration avec une baie fictive suffit pour en juger.</p>
+  <div class="rv">
+    <a class="btn" href="mailto:shamsetdean@gmail.com?subject=DNDVDL-MAP%2C%20demande%20de%20d%C3%A9monstration">Demander une démonstration</a><a class="btn ghost" href="#haut">Revenir en haut</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="in">
+    <p><strong>DNDVDL-MAP</strong>, projet d'Anthropotech Lab. Conçu et développé par Shams &amp; Dean. Toutes les captures de cette page utilisent des données fictives.</p>
+    <p>&copy; 2026 Shams Guettaf, Anthropotech Lab. Tous droits réservés. Ce site ne dépose aucun cookie, n'enregistre rien dans votre navigateur et n'utilise aucun traceur. <a href="mentions-legales.html">Mentions légales</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var clamp = function(v,a,b){ return Math.min(b===undefined?1:b, Math.max(a===undefined?0:a, v)); };
+
+  /* Apparitions */
+  var rv = document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:.15, rootMargin:'0px 0px -6% 0px'});
+    rv.forEach(function(el){ io.observe(el); });
+  } else { rv.forEach(function(el){ el.classList.add('in'); }); }
+
+  /* Compteurs et voyants */
+  var mods = document.querySelectorAll('.mod');
+  function runCount(mod){
+    var el = mod.querySelector('[data-count]'), target = +el.getAttribute('data-count'), t0 = null, dur = 1300;
+    function step(t){
+      if(t0===null) t0 = t;
+      var k = clamp((t - t0)/dur), e = 1 - Math.pow(1-k,3);
+      el.textContent = Math.round(target*e);
+      if(k<1) requestAnimationFrame(step); else mod.classList.add('in');
+    }
+    requestAnimationFrame(step);
+  }
+  if('IntersectionObserver' in window && !reduce){
+    var io2 = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ runCount(e.target); io2.unobserve(e.target); } });
+    },{threshold:.6});
+    mods.forEach(function(m){ io2.observe(m); });
+  } else { mods.forEach(function(m){ var el=m.querySelector('[data-count]'); el.textContent=el.getAttribute('data-count'); m.classList.add('in'); }); }
+
+  if(reduce) return;
+
+  /* Mots du manifeste */
+  var mp = document.getElementById('manifeste'), words = [];
+  (function(){
+    var txt = mp.textContent.trim().split(/\s+/), seen = {};
+    mp.textContent = '';
+    txt.forEach(function(w,i){
+      var s = document.createElement('span');
+      s.className = 'w';
+      if(w==='câble' && !seen.c){ s.className += ' k2'; seen.c = 1; }
+      else if(w==='port,'){ s.className += ' k1'; }
+      else if(w==='câble' && seen.c){ s.className += ' k2'; }
+      else if(w==='baie'){ s.className += ' k3'; }
+      else if(w==='tous'){ s.className += ' k1'; }
+      s.textContent = w;
+      mp.appendChild(s);
+      if(i < txt.length-1) mp.appendChild(document.createTextNode(' '));
+      words.push(s);
+    });
+  })();
+
+  var nav = document.querySelector('.nav');
+  var darks = document.querySelectorAll('[data-dark]');
+  var hero = document.querySelector('[data-scene="hero"]');
+  var mani = document.querySelector('[data-scene="manifesto"]');
+  var split = document.querySelector('[data-scene="split"]');
+  var diagram = document.getElementById('diagram');
+  var steps = split.querySelectorAll('.steps li');
+  var rail = document.querySelector('[data-scene="rail"]');
+  var track = rail.querySelector('.track');
+  var jacks = rail.querySelectorAll('.jacks i');
+  var guard = document.querySelector('[data-scene="guard"]');
+  var gstage = document.getElementById('gstage');
+  var gts = guard.querySelectorAll('.gt');
+  var fin = document.querySelector('[data-final]');
+  var phones = document.querySelectorAll('[data-view]');
+  var phase = -1, gphase = -1;
+
+  function pct(el){
+    var r = el.getBoundingClientRect();
+    return clamp(-r.top / (r.height - window.innerHeight));
+  }
+
+  function frame(){
+    var h = window.innerHeight, w = window.innerWidth;
+
+    /* Hero */
+    var p = pct(hero);
+    hero.style.setProperty('--p', p.toFixed(4));
+    hero.style.setProperty('--pp', clamp(p*1.6).toFixed(4));
+    hero.style.setProperty('--pr', clamp(p*1.9 - .05).toFixed(4));
+    hero.style.setProperty('--pw', clamp(p*2.2 - .35).toFixed(4));
+
+    /* Manifeste */
+    var m = pct(mani), n = words.length;
+    mani.style.setProperty('--mp', m.toFixed(4));
+    for(var i=0;i<n;i++){ words[i].style.opacity = (0.16 + 0.84*clamp((m*1.12*n - i)/2.4)).toFixed(3); }
+
+    /* Contenant et contenu */
+    var ph = Math.min(3, Math.floor(pct(split)*4));
+    if(ph !== phase){
+      phase = ph;
+      diagram.className = 'diagram ph' + ph;
+      steps.forEach(function(li,k){ li.classList.toggle('on', k===ph); li.classList.toggle('done', k<ph); });
+    }
+
+    /* Vitrine horizontale */
+    var rp = pct(rail), N = jacks.length;
+    /* paliers : chaque panneau marque un temps d'arret avant de glisser au suivant */
+    var x = rp*(N-1), seg = Math.min(N-2, Math.floor(x)), f = clamp((x - seg - .3)/.4);
+    f = f*f*(3 - 2*f);
+    var pos = rp >= 1 ? N-1 : seg + f;
+    track.style.transform = 'translateX(' + (-pos*w).toFixed(1) + 'px)';
+    var ji = Math.min(N-1, Math.round(pos));
+    jacks.forEach(function(j,k){ j.classList.toggle('on', k<=ji); });
+
+    /* Protection */
+    var gp = Math.min(2, Math.floor(pct(guard)*3));
+    if(gp !== gphase){
+      gphase = gp;
+      gstage.className = 'gstage gp' + gp;
+      gts.forEach(function(t,k){ t.classList.toggle('on', k===gp); });
+    }
+
+    /* Telephone */
+    phones.forEach(function(el){ var r = el.getBoundingClientRect(); el.style.setProperty('--v', clamp((h - r.top)/(h*0.75)).toFixed(3)); });
+
+    /* Cable final */
+    var fr = fin.getBoundingClientRect(), k = clamp((h - fr.top)/(h*0.7));
+    fin.style.setProperty('--k', k.toFixed(3));
+    fin.classList.toggle('live', k > .97);
+
+    /* Navigation claire ou sombre */
+    var dark = false;
+    darks.forEach(function(el){ var r = el.getBoundingClientRect(); if(r.top <= 27 && r.bottom >= 27) dark = true; });
+    if(document.documentElement.scrollHeight - window.scrollY - h < 120) dark = true;
+    nav.classList.toggle('light', !dark);
+  }
+
+  var ticking = false;
+  function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(function(){ frame(); ticking = false; }); } }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  frame();
+})();
+</script>
+<script>
+(function(){
+  var root = document.documentElement, s = document.getElementById('splash');
+  if(!s || !root.classList.contains('splash-on')) return;
+  var done = false;
+  function close(){
+    if(done) return; done = true;
+    s.classList.add('out');
+    root.classList.remove('splash-on');
+    setTimeout(function(){ if(s.parentNode) s.parentNode.removeChild(s); }, 800);
+  }
+  setTimeout(close, 2700);
+  s.addEventListener('click', close);
+  document.addEventListener('keydown', close, {once:true});
+})();
+</script>
+</body>
+</html>
