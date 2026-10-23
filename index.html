@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>DNDVDL-MAP, la baie informatique lisible par tous</title>
+<title>DNDVDL-MAP, la baie lisible par ceux qui y ont droit</title>
 <meta name="description" content="DNDVDL-MAP est un outil privé qui permet de gérer et d'organiser des baies informatiques. L'application est en ligne, les données restent sur l'appareil.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0d1b21">
@@ -19,7 +19,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:site_name" content="DNDVDL-MAP, Anthropotech Lab">
-<meta property="og:title" content="DNDVDL-MAP, la baie informatique lisible par tous">
+<meta property="og:title" content="DNDVDL-MAP, la baie lisible par ceux qui y ont droit">
 <meta property="og:description" content="L'application est en ligne. Les données de la baie ne quittent jamais l'appareil.">
 <meta property="og:url" content="https://shamsetdean.github.io/dndvdl-presentation/">
 <meta property="og:image" content="https://shamsetdean.github.io/dndvdl-presentation/og-image.jpg">
@@ -27,7 +27,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="DNDVDL-MAP, Anthropotech Lab : trois câbles réseau branchés sur un bandeau de brassage">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="DNDVDL-MAP, la baie informatique lisible par tous">
+<meta name="twitter:title" content="DNDVDL-MAP, la baie lisible par ceux qui y ont droit">
 <meta name="twitter:description" content="L'application est en ligne. Les données de la baie ne quittent jamais l'appareil.">
 <meta name="twitter:image" content="https://shamsetdean.github.io/dndvdl-presentation/og-image.jpg">
 <link rel="preload" as="font" type="font/woff2" href="fonts/space-grotesk.woff2" crossorigin>
@@ -131,7 +131,7 @@ html.splash-on,html.splash-on body{overflow:hidden}
   opacity:calc(1 - var(--p,0)*3);transform:translateY(calc(var(--p,0)*-60px));will-change:opacity,transform}
 .hero-copy h1{font-weight:600;font-size:clamp(3.4rem,12vw,9.5rem);letter-spacing:-.04em;line-height:.9;margin:16px 0 22px}
 .hero-copy h1 span{color:transparent;-webkit-text-stroke:1.5px rgba(231,239,236,.55)}
-.hero-copy .sub{font-size:clamp(1.1rem,2.2vw,1.45rem);color:var(--frost-dim);max-width:32ch;margin:0 auto}
+.hero-copy .sub{font-size:clamp(1.1rem,2.2vw,1.45rem);color:var(--frost-dim);max-width:40ch;margin:0 auto}
 .hero-copy .sub em{color:var(--frost)}
 .wires{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:calc(var(--pw,0)*25)}
 .wires path{fill:none;stroke-width:.55;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--pw,0))}
@@ -412,7 +412,7 @@ footer strong{color:var(--frost);font-weight:600}
     <div class="hero-copy">
       <p class="tag">Infrastructure réseau · usage interne</p>
       <h1>DNDVDL<span>-MAP</span></h1>
-      <p class="sub">La baie informatique, lisible par tous. <em class="s">Les données, gardées par vous.</em></p>
+      <p class="sub">La baie informatique, lisible par ceux qui&nbsp;y&nbsp;ont&nbsp;droit.<br><em class="s">Les données, gardées par vous.</em></p>
     </div>
     <div class="hero-shot">
       <figure class="frame"><img src="images/01-baie.webp" width="1800" height="1286" alt="Une baie informatique fictive dans DNDVDL-MAP : bandeaux de brassage, switchs, câbles colorés et liste des connexions" fetchpriority="high"></figure>
@@ -426,7 +426,7 @@ footer strong{color:var(--frost);font-weight:600}
   <div class="pin">
     <div class="mwrap">
       <div class="mbar" aria-hidden="true"><i></i></div>
-      <p id="manifeste">Un câble débranché, et personne ne sait où il menait. Le plan de la baie dort dans un tableur que seul son auteur comprend. DNDVDL-MAP dessine chaque port, chaque câble et chaque bureau, pour que la baie se lise d'un coup d'œil, par tous ceux qui en ont besoin.</p>
+      <p id="manifeste">Un câble débranché, et personne ne sait où il menait. Le plan de la baie dort dans un tableur que seul son auteur comprend. DNDVDL-MAP dessine chaque port, chaque câble et chaque bureau, pour que la baie se lise d'un coup d'œil, par ceux qui y ont droit.</p>
     </div>
   </div>
 </section>
@@ -677,7 +677,7 @@ footer strong{color:var(--frost);font-weight:600}
       else if(w==='port,'){ s.className += ' k1'; }
       else if(w==='câble' && seen.c){ s.className += ' k2'; }
       else if(w==='baie'){ s.className += ' k3'; }
-      else if(w==='tous'){ s.className += ' k1'; }
+      else if(w==='droit.'){ s.className += ' k1'; }
       s.textContent = w;
       mp.appendChild(s);
       if(i < txt.length-1) mp.appendChild(document.createTextNode(' '));
